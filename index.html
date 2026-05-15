@@ -902,7 +902,7 @@
 </div>
 
 <script>
-  async function submitSurvey() {
+async function submitSurvey() {
 
   const q10 = document.getElementById('q10');
 
@@ -913,7 +913,7 @@
 
   if (contactRequired) {
 
-    const name  = document.getElementById('c-name').value.trim();
+    const name = document.getElementById('c-name').value.trim();
     const email = document.getElementById('c-email').value.trim();
 
     if (!name || !email) {
@@ -939,10 +939,13 @@
   } catch(error) {
 
     alert("حدث خطأ أثناء إرسال الاستبيان");
-
     console.error(error);
+
   }
 }
+
+
+
   // ====== State ======
   let totalSteps = 10; // Q1–Q10
   let contactRequired = false;
