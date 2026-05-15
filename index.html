@@ -902,6 +902,47 @@
 </div>
 
 <script>
+  async function submitSurvey() {
+
+  const q10 = document.getElementById('q10');
+
+  if (!q10.querySelector('.option.selected')) {
+    document.getElementById('err-10').classList.add('show');
+    return;
+  }
+
+  if (contactRequired) {
+
+    const name  = document.getElementById('c-name').value.trim();
+    const email = document.getElementById('c-email').value.trim();
+
+    if (!name || !email) {
+      document.getElementById('err-contact').classList.add('show');
+      return;
+    }
+  }
+
+  const data = collectAnswers();
+
+  try {
+
+    await fetch("https://script.google.com/macros/s/AKfycbxP5i0o-Ncbex--_7oZotOusn37woYdY_Hx6-O4De7BHcQOB_UYNppb2YIVMqxTc6Jg/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    goTo('end');
+
+  } catch(error) {
+
+    alert("حدث خطأ أثناء إرسال الاستبيان");
+
+    console.error(error);
+  }
+}
   // ====== State ======
   let totalSteps = 10; // Q1–Q10
   let contactRequired = false;
