@@ -972,51 +972,27 @@
     document.getElementById('err-contact').classList.remove('show');
   }
 
- ```javascript id="6x2c7r"
-// ====== Submit ======
-async function submitSurvey() {
-
-  const q10 = document.getElementById('q10');
-
-  if (!q10.querySelector('.option.selected')) {
-    document.getElementById('err-10').classList.add('show');
-    return;
-  }
-
-  if (contactRequired) {
-
-    const name = document.getElementById('c-name').value.trim();
-    const email = document.getElementById('c-email').value.trim();
-
-    if (!name || !email) {
-      document.getElementById('err-contact').classList.add('show');
+  // ====== Submit ======
+  function submitSurvey() {
+    const q10 = document.getElementById('q10');
+    if (!q10.querySelector('.option.selected')) {
+      document.getElementById('err-10').classList.add('show');
       return;
     }
-  }
-
-  // Collect all data
-  const data = collectAnswers();
-
-  try {
-
-    await fetch("https://script.google.com/macros/s/AKfycbxP5i0o-Ncbex--_7oZotOusn37woYdY_Hx6-O4De7BHcQOB_UYNppb2YIVMqxTc6Jg/exec", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain"
-      },
-      body: JSON.stringify(data)
-    });
-
+    if (contactRequired) {
+      const name  = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      if (!name || !email) {
+        document.getElementById('err-contact').classList.add('show');
+        return;
+      }
+    }
+    // Collect all data
+    const data = collectAnswers();
+    console.log('Survey submitted:', data);
+    // TODO: send to Google Sheets via fetch (see instructions)
     goTo('end');
-
-  } catch(error) {
-
-    alert("حدث خطأ أثناء إرسال الاستبيان");
-    console.error(error);
-
   }
-}
 
   // ====== Collect answers ======
   function collectAnswers() {
