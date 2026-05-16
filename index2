@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خدمات مالية ومحاسبية للعرب في هولندا</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --accent: #f0883e;
+    --accent2: #d29922;
+    --green: #3fb950;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --radius: 14px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 16px 60px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(240,136,62,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -150px;
+    left: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(210,153,34,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 680px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    padding: 12px 0 16px;
+    margin-bottom: 8px;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .progress-bar {
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  /* Cards / Screens */
+  .screen {
+    display: none;
+    animation: fadeSlide 0.35s ease forwards;
+  }
+  .screen.active { display: block; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  /* Welcome card */
+  .welcome-emoji {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .welcome-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+  .welcome-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .welcome-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+
+  /* Question style */
+  .q-number {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .q-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 22px;
+    line-height: 1.5;
+  }
+
+  /* Options */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    user-select: none;
+  }
+  .option:hover {
+    border-color: var(--accent);
+    background: rgba(240,136,62,0.07);
+    transform: translateX(-3px);
+  }
+  .option.selected {
+    border-color: var(--accent);
+    background: rgba(240,136,62,0.12);
+  }
+  .option.selected .option-check {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .option.selected .option-check::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .option-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: transparent;
+    flex-shrink: 0;
+    transition: var(--transition);
+    position: relative;
+  }
+  .option-check::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%) scale(0);
+    width: 8px; height: 8px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    transition: var(--transition);
+  }
+  .option.checkbox .option-check {
+    border-radius: 5px;
+  }
+  .option.checkbox.selected .option-check::after {
+    content: '✓';
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    width: auto; height: auto;
+    border-radius: 0;
+    background: transparent;
+    transform: translate(-50%,-50%) scale(1);
+  }
+
+  .option-label {
+    font-size: 15px;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.4;
+  }
+  .option-emoji {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Textarea */
+  textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    resize: vertical;
+    min-height: 120px;
+    outline: none;
+    transition: var(--transition);
+    line-height: 1.7;
+    direction: rtl;
+  }
+  textarea:focus { border-color: var(--accent); }
+  textarea::placeholder { color: var(--text-muted); }
+
+  /* Text inputs */
+  input[type="text"], input[type="email"], input[type="tel"] {
+    width: 100%;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: var(--transition);
+    direction: rtl;
+  }
+  input:focus { border-color: var(--accent); }
+  input::placeholder { color: var(--text-muted); }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .input-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .required-star { color: var(--accent); }
+
+  /* Info block */
+  .info-block {
+    background: linear-gradient(135deg, rgba(240,136,62,0.1), rgba(210,153,34,0.08));
+    border: 1px solid rgba(240,136,62,0.3);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .info-block::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+  }
+  .info-block p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .info-block p:last-child { margin-bottom: 0; }
+  .info-pin {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #0d1117;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(240,136,62,0.3);
+  }
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn-nav {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .btn-nav .btn-primary { flex: 1; }
+
+  /* Comment box */
+  .comment-area {
+    margin-top: 12px;
+  }
+
+  /* Error */
+  .error-msg {
+    font-size: 13px;
+    color: #f85149;
+    margin-top: 8px;
+    display: none;
+  }
+  .error-msg.show { display: block; }
+
+  /* Ending screen */
+  .ending-icon {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .ending-title {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ending-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .share-btn {
+    background: linear-gradient(135deg, var(--green), #2ea043);
+    color: white;
+    width: 100%;
+    font-size: 15px;
+    padding: 16px;
+    border-radius: 10px;
+    border: none;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .share-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(63,185,80,0.25); }
+
+  /* Nav dots */
+  .nav-dots {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    cursor: pointer;
+  }
+  .dot.done { background: var(--accent); border-color: var(--accent); }
+
+  @media(max-width: 480px) {
+    .card { padding: 24px 18px; }
+    .q-text { font-size: 16px; }
+    .welcome-title { font-size: 22px; }
+    .info-block { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="progressText">البداية</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <!-- WELCOME -->
+  <div class="screen active" id="screen-0">
+    <div class="card">
+      <span class="welcome-emoji">🇳🇱</span>
+      <div class="welcome-title">خدمات مالية ومحاسبية للعرب في هولندا</div>
+      <div class="welcome-body">
+        عم نشتغل على بناء خدمة محاسبة وإدارة مالية للعرب أصحاب المشاريع في هولندا.
+        وهاد الاستبيان رح يساعدنا نفهم احتياجات مشروعك والمشاكل اللي عم تواجهك.
+      </div>
+      <div class="welcome-timer">⏱ 3 دقائق فقط</div>
+      <button class="btn btn-primary" onclick="goTo(1)">ابدأ الاستبيان ←</button>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="screen" id="screen-1">
+    <div class="card">
+      <div class="q-number">سؤال 1 من 10</div>
+      <div class="q-text">هل لديك مشروع أو تعمل كـ ZZP'er في هولندا؟</div>
+      <div class="options" id="q1">
+        <label class="option" onclick="selectSingle(this,'q1')">
+          <span class="option-emoji">✅</span>
+          <span class="option-label">نعم</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q1')">
+          <span class="option-emoji">❌</span>
+          <span class="option-label">لا</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q1')">
+          <span class="option-emoji">💡</span>
+          <span class="option-label">أفكر في تأسيس مشروع</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q1')">
+          <span class="option-emoji">💼</span>
+          <span class="option-label">حاليًا موظف</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="error-msg" id="err-1">⚠️ الرجاء اختيار إجابة</div>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(0)">← رجوع</button>
+        <button class="btn btn-primary" onclick="nextQ(1,2,false)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="screen" id="screen-2">
+    <div class="card">
+      <div class="q-number">سؤال 2 من 10</div>
+      <div class="q-text">ما نوع نشاطك التجاري؟ <span style="font-size:13px;color:var(--text-muted)">(اختر كل ما ينطبق)</span></div>
+      <div class="options" id="q2">
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">💻</span>
+          <span class="option-label">IT / برمجة</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">☕</span>
+          <span class="option-label">مطعم / كافيه</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">🛍️</span>
+          <span class="option-label">محل / تجارة أونلاين</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">🚚</span>
+          <span class="option-label">نقل / توصيل</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">🏥</span>
+          <span class="option-label">عيادة / مركز تجميل</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">🎨</span>
+          <span class="option-label">تصميم / سوشال ميديا</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">🔧</span>
+          <span class="option-label">صيانة / ترميم / خدمات فنية</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">📊</span>
+          <span class="option-label">استشارات / تدريب / خدمات مهنية</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">➕</span>
+          <span class="option-label">غير ذلك</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="error-msg" id="err-2">⚠️ الرجاء اختيار إجابة على الأقل</div>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(1)">← رجوع</button>
+        <button class="btn btn-primary" onclick="nextQ(2,3,true)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="screen" id="screen-3">
+    <div class="card">
+      <div class="q-number">سؤال 3 من 10</div>
+      <div class="q-text">ما نطاق دخلك الشهري تقريبًا؟</div>
+      <div class="options" id="q3">
+        <label class="option" onclick="selectSingle(this,'q3')">
+          <span class="option-emoji">💶</span>
+          <span class="option-label">أقل من €3,000</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q3')">
+          <span class="option-emoji">💰</span>
+          <span class="option-label">€3,000 – €6,000</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q3')">
+          <span class="option-emoji">📈</span>
+          <span class="option-label">€6,000 – €10,000</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q3')">
+          <span class="option-emoji">🚀</span>
+          <span class="option-label">أكثر من €10,000</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="error-msg" id="err-3">⚠️ الرجاء اختيار إجابة</div>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(2)">← رجوع</button>
+        <button class="btn btn-primary" onclick="nextQ(3,4,false)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="screen" id="screen-4">
+    <div class="card">
+      <div class="q-number">سؤال 4 من 10</div>
+      <div class="q-text">هل لديك حاليًا محاسب؟</div>
+      <div class="options" id="q4">
+        <label class="option" onclick="selectSingle(this,'q4')">
+          <span class="option-emoji">😊</span>
+          <span class="option-label">نعم وراضٍ عن الخدمة</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q4')">
+          <span class="option-emoji">😐</span>
+          <span class="option-label">نعم بس مو راضٍ تمامًا</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q4')">
+          <span class="option-emoji">🔍</span>
+          <span class="option-label">لا وأبحث عن محاسب</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q4')">
+          <span class="option-emoji">🖩</span>
+          <span class="option-label">لا، بعمل حساباتي بأيدي</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="error-msg" id="err-4">⚠️ الرجاء اختيار إجابة</div>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(3)">← رجوع</button>
+        <button class="btn btn-primary" onclick="nextQ(4,5,false)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="screen" id="screen-5">
+    <div class="card">
+      <div class="q-number">سؤال 5 من 10</div>
+      <div class="q-text">ما أكثر شيء يزعجك في التعامل مع المحاسب الآن؟ <span style="font-size:13px;color:var(--text-muted)">(اختر كل ما ينطبق)</span></div>
+      <div class="options" id="q5">
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">😵</span>
+          <span class="option-label">لا أفهم ما يحدث بأموري المالية</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">📋</span>
+          <span class="option-label">يقدم الضرائب فقط بدون نصائح</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">🇳🇱</span>
+          <span class="option-label">صعوبة اللغة (هولندي)</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">⏳</span>
+          <span class="option-label">بطء الرد وعدم المتابعة</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">🗂️</span>
+          <span class="option-label">فوضى في الفواتير والمستندات</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">✨</span>
+          <span class="option-label">لا توجد مشاكل حاليًا</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option checkbox" onclick="selectMulti(this)">
+          <span class="option-emoji">💬</span>
+          <span class="option-label">شيء آخر</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="comment-area">
+        <textarea placeholder="اكتب تعليقك هنا…" id="q5-comment" rows="3"></textarea>
+      </div>
+      <div class="error-msg" id="err-5">⚠️ الرجاء اختيار إجابة على الأقل</div>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(4)">← رجوع</button>
+        <button class="btn btn-primary" onclick="nextQ(5,6,true)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="screen" id="screen-6">
+    <div class="card">
+      <div class="q-number">سؤال 6 من 10</div>
+      <div class="q-text">ما الأهم بالنسبة لك في اختيار محاسب؟</div>
+      <div class="options" id="q6">
+        <label class="option" onclick="selectSingle(this,'q6')">
+          <span class="option-emoji">💸</span>
+          <span class="option-label">أقل سعر ممكن</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q6')">
+          <span class="option-emoji">⚡</span>
+          <span class="option-label">سرعة إنجاز الضرائب والمهام</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q6')">
+          <span class="option-emoji">🎓</span>
+          <span class="option-label">شخص يشرح ويوجهني ماليًا</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q6')">
+          <span class="option-emoji">🤝</span>
+          <span class="option-label">شخص يمكن الاعتماد عليه على المدى الطويل</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="error-msg" id="err-6">⚠️ الرجاء اختيار إجابة</div>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(5)">← رجوع</button>
+        <button class="btn btn-primary" onclick="nextQ(6,7,false)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="screen" id="screen-7">
+    <div class="card">
+      <div class="q-number">سؤال 7 من 10</div>
+      <div class="q-text">ما السعر الشهري المناسب لخدمة تشمل تنظيم الحسابات + إقرارات ضريبية + متابعة وتحليل مالي؟</div>
+      <div class="options" id="q7">
+        <label class="option" onclick="selectSingle(this,'q7')">
+          <span class="option-emoji">🟢</span>
+          <span class="option-label">أقل من €75</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q7')">
+          <span class="option-emoji">🔵</span>
+          <span class="option-label">€75 – €125</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q7')">
+          <span class="option-emoji">🟡</span>
+          <span class="option-label">€125 – €175</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q7')">
+          <span class="option-emoji">🏆</span>
+          <span class="option-label">أكثر من €175</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="error-msg" id="err-7">⚠️ الرجاء اختيار إجابة</div>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(6)">← رجوع</button>
+        <button class="btn btn-primary" onclick="nextQ(7,8,false)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="screen" id="screen-8">
+    <div class="card">
+      <div class="q-number">سؤال 8 من 10</div>
+      <div class="q-text">كيف تدير فواتيرك ومستنداتك الآن؟</div>
+      <div class="options" id="q8">
+        <label class="option" onclick="selectSingle(this,'q8')">
+          <span class="option-emoji">📱</span>
+          <span class="option-label">كل شيء مرتب رقميًا</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q8')">
+          <span class="option-emoji">📁</span>
+          <span class="option-label">أغلبه مرتب ورقيًا</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q8')">
+          <span class="option-emoji">😅</span>
+          <span class="option-label">نوعًا ما فوضى</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q8')">
+          <span class="option-emoji">🆘</span>
+          <span class="option-label">فوضى تامة، أحتاج مساعدة</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="error-msg" id="err-8">⚠️ الرجاء اختيار إجابة</div>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(7)">← رجوع</button>
+        <button class="btn btn-primary" onclick="nextQ(8,9,false)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="screen" id="screen-9">
+    <div class="card">
+      <div class="q-number">سؤال 9 من 10</div>
+      <div class="q-text">لو وجدت خدمة محاسبة بالعربي في هولندا، ما أهم شيء تتوقعه منها؟</div>
+      <textarea id="q9-text" placeholder="اكتب بكل حرية…" rows="5"></textarea>
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(8)">← رجوع</button>
+        <button class="btn btn-primary" onclick="goTo(10)">التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10 with Info block above -->
+  <div class="screen" id="screen-10">
+    <div class="info-block">
+      <div class="info-pin">📌 لحظة قبل ما تكمل…</div>
+      <p>خدماتنا ما رح تقتصر فقط على مسك الدفاتر وتقديم الضرائب، بل رح نشتغل كمان على إعطائك صورة أوضح عن وضع مشروعك المالي.</p>
+      <p>يعني نفهم سوا من وين عم تجي أعلى الإيرادات، وين في مصاريف عم تاكل الأرباح، وشو أهم النقاط والأهداف اللي لازم تركز عليها حتى مشروعك يكبر بشكل أسرع.</p>
+      <p>وإذا حابب تعرف أكتر عن هالخدمات مستقبلًا، فيك تترك معلوماتك بالأسفل لنتواصل معك. 👇</p>
+    </div>
+    <div class="card">
+      <div class="q-number">سؤال 10 من 10</div>
+      <div class="q-text">هل تريد أن نتواصل معك؟</div>
+      <div class="options" id="q10">
+        <label class="option" onclick="selectSingle(this,'q10'); handleContact(true)">
+          <span class="option-emoji">📲</span>
+          <span class="option-label">نعم</span>
+          <span class="option-check"></span>
+        </label>
+        <label class="option" onclick="selectSingle(this,'q10'); handleContact(false)">
+          <span class="option-emoji">🙈</span>
+          <span class="option-label">لا، شكرًا</span>
+          <span class="option-check"></span>
+        </label>
+      </div>
+      <div class="error-msg" id="err-10">⚠️ الرجاء اختيار إجابة</div>
+
+      <!-- Contact block (conditional) -->
+      <div id="contact-block" style="display:none; margin-top:24px;">
+        <div style="height:1px;background:var(--border);margin-bottom:20px;"></div>
+        <div style="font-size:14px;color:var(--text-muted);margin-bottom:16px;">معلوماتك للتواصل 👇</div>
+        <div class="input-group">
+          <div class="input-label">الاسم <span class="required-star">*</span></div>
+          <input type="text" id="c-name" placeholder="اسمك الكريم">
+        </div>
+        <div class="input-group">
+          <div class="input-label">رقم الهاتف</div>
+          <input type="tel" id="c-phone" placeholder="+31 6 xxxxxxxx">
+        </div>
+        <div class="input-group">
+          <div class="input-label">البريد الإلكتروني <span class="required-star">*</span></div>
+          <input type="email" id="c-email" placeholder="example@email.com" dir="ltr">
+        </div>
+        <div class="input-group">
+          <div class="input-label">اسم مشروعك أو شركتك</div>
+          <input type="text" id="c-biz" placeholder="اختياري">
+        </div>
+        <div class="error-msg" id="err-contact">⚠️ الرجاء إدخال الاسم والبريد الإلكتروني</div>
+      </div>
+
+      <div class="btn-nav">
+        <button class="btn btn-secondary" onclick="goTo(9)">← رجوع</button>
+        <button class="btn btn-primary" onclick="submitSurvey()">إرسال الاستبيان 🎉</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENDING -->
+  <div class="screen" id="screen-end">
+    <div class="card" style="text-align:center;">
+      <span class="ending-icon">🙏</span>
+      <div class="ending-title">شكرًا كتير!</div>
+      <div class="ending-body">
+        إجابتك رح تساعدنا نبني خدمة تعالج مشاكلك الحقيقية وتفتحلك الطريق لتكبر مشروعك.
+        <br><br>
+        إذا عندك صديق عنده مشروع في هولندا شارك الرابط معو 🤝
+      </div>
+      <button class="share-btn" onclick="shareSurvey()">
+        📤 شارك الاستبيان مع صديق
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ====== State ======
+  let totalSteps = 10; // Q1–Q10
+  let contactRequired = false;
+
+  // ====== Navigation ======
+  function goTo(n) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = n === 'end' ? document.getElementById('screen-end') : document.getElementById('screen-' + n);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    updateProgress(n);
+  }
+
+  function updateProgress(n) {
+    const fill = document.getElementById('progressFill');
+    const txt  = document.getElementById('progressText');
+    const pct  = document.getElementById('progressPct');
+    if (n === 0) {
+      fill.style.width = '0%';
+      txt.textContent = 'البداية';
+      pct.textContent = '0%';
+    } else if (n === 'end') {
+      fill.style.width = '100%';
+      txt.textContent = 'اكتمل! 🎉';
+      pct.textContent = '100%';
+    } else {
+      const p = Math.round((n / totalSteps) * 100);
+      fill.style.width = p + '%';
+      txt.textContent = 'سؤال ' + n + ' من ' + totalSteps;
+      pct.textContent = p + '%';
+    }
+  }
+
+  // ====== Selection ======
+  function selectSingle(el, groupId) {
+    const group = document.getElementById(groupId);
+    group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    const err = document.getElementById('err-' + groupId.replace('q',''));
+    if (err) err.classList.remove('show');
+  }
+
+  function selectMulti(el) {
+    el.classList.toggle('selected');
+  }
+
+  // ====== Validation + Next ======
+  function nextQ(current, next, isMulti) {
+    const group = document.getElementById('q' + current);
+    const selected = group ? group.querySelectorAll('.option.selected') : [];
+    const err = document.getElementById('err-' + current);
+
+    if (selected.length === 0) {
+      if (err) err.classList.add('show');
+      return;
+    }
+    if (err) err.classList.remove('show');
+    goTo(next);
+  }
+
+  // ====== Contact conditional ======
+  function handleContact(show) {
+    document.getElementById('contact-block').style.display = show ? 'block' : 'none';
+    contactRequired = show;
+    document.getElementById('err-10').classList.remove('show');
+    document.getElementById('err-contact').classList.remove('show');
+  }
+
+  // ====== Submit ======
+  function submitSurvey() {
+    const q10 = document.getElementById('q10');
+    if (!q10.querySelector('.option.selected')) {
+      document.getElementById('err-10').classList.add('show');
+      return;
+    }
+    if (contactRequired) {
+      const name  = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      if (!name || !email) {
+        document.getElementById('err-contact').classList.add('show');
+        return;
+      }
+    }
+    // Collect all data
+    const data = collectAnswers();
+    console.log('Survey submitted:', data);
+    // TODO: send to Google Sheets via fetch (see instructions)
+    goTo('end');
+  }
+
+  // ====== Collect answers ======
+  function collectAnswers() {
+    function getSingle(id) {
+      const el = document.getElementById(id);
+      if (!el) return '';
+      const sel = el.querySelector('.option.selected .option-label');
+      return sel ? sel.textContent.trim() : '';
+    }
+    function getMulti(id) {
+      const el = document.getElementById(id);
+      if (!el) return [];
+      return Array.from(el.querySelectorAll('.option.selected .option-label')).map(l => l.textContent.trim());
+    }
+    return {
+      q1:  getSingle('q1'),
+      q2:  getMulti('q2'),
+      q3:  getSingle('q3'),
+      q4:  getSingle('q4'),
+      q5:  getMulti('q5'),
+      q5_comment: (document.getElementById('q5-comment')||{}).value || '',
+      q6:  getSingle('q6'),
+      q7:  getSingle('q7'),
+      q8:  getSingle('q8'),
+      q9:  (document.getElementById('q9-text')||{}).value || '',
+      q10: getSingle('q10'),
+      contact: contactRequired ? {
+        name:  (document.getElementById('c-name')||{}).value || '',
+        phone: (document.getElementById('c-phone')||{}).value || '',
+        email: (document.getElementById('c-email')||{}).value || '',
+        biz:   (document.getElementById('c-biz')||{}).value || '',
+      } : null,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  // ====== Share ======
+  const SURVEY_URL = window.location.href;
+
+  function shareSurvey() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'خدمات مالية ومحاسبية للعرب في هولندا',
+        text: 'شارك رأيك في هاد الاستبيان وساعدنا نبني خدمة محاسبة بالعربي في هولندا 🇳🇱',
+        url: SURVEY_URL,
+      }).catch(() => copyLink());
+    } else {
+      copyLink();
+    }
+  }
+
+  function copyLink() {
+    navigator.clipboard.writeText(SURVEY_URL).then(() => {
+      alert('تم نسخ الرابط! 📋\n' + SURVEY_URL);
+    }).catch(() => {
+      prompt('انسخ الرابط:', SURVEY_URL);
+    });
+  }
+</script>
+</body>
+</html>
